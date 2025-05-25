@@ -135,7 +135,7 @@ app.get('/getUserInfo', (req, res) => {
     res.json({ fromUser, toUser });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
     console.log(`✅ Server running on http://localhost:${PORT}`);
 });
