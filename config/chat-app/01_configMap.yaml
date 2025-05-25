@@ -5,4 +5,4 @@ metadata:
   labels:
     app: chat-app
 data:
-  MONGO_HOSTS: "mongodb-rs.default.svc.cluster.local:27017"
+  MONGO_HOSTS: "mongodb-rs-0.mongodb-rs.default.svc.cluster.local:27017，mongodb-rs-1.mongodb-rs.default.svc.cluster.local:27017，mongodb-rs-2.mongodb-rs.default.svc.cluster.local:27017"
