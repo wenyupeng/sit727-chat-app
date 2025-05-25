@@ -16,7 +16,7 @@ spec:
     spec:
       serviceAccountName: chat-app
       containers:
-        - name: ecommerce
+        - name: chat-app
           image: chrisyp/sit727-72hd:v1
           ports:
             - name: http
