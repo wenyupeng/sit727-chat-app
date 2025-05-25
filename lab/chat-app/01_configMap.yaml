@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chat-app
+  labels:
+    app: chat-app
+data:
+  server_name: Super Pets

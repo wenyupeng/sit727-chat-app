@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: demo-storage
+# provisioner: kubernetes.io/no-provisioner // no provisioner means manually create PV
+provisioner: docker.io/hostpath
+reclaimPolicy: Delete # Retain means PV will not be deleted when PVC is deleted
+volumeBindingMode: WaitForFirstConsumer

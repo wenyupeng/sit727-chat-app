@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Private Chat</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <div class="flex justify-center items-center h-screen">
+    <div class="w-full max-w-2xl shadow-lg rounded-lg bg-white p-6">
+      <h2 class="text-xl font-bold mb-4">🔒<span id="from-user"></span> Private Chat with <span id="to-user"></span></h2>
+
+      <!-- 私聊消息窗口 -->
+      <ul id="private-messages" class="h-96 overflow-y-auto space-y-2 border rounded p-4 bg-gray-50 mb-4"></ul>
+
+      <!-- 私聊输入框 -->
+      <form id="private-form" class="flex flex-row gap-4">
+        <input id="private-input" autocomplete="off" class="flex-1 px-4 py-2 border rounded-lg" placeholder="Type a private message..." />
+        <button class="rounded-lg bg-purple-500 px-6 py-2 text-white hover:bg-purple-600">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./js/private.js"></script>
+</body>
+</html>

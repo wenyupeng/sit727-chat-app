@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb-rs
+spec:
+  serviceName: mongodb-rs
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongodb-rs
+  template:
+    metadata:
+      labels:
+        app: mongodb-rs
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:4.4.10
+          ports:
+            - containerPort: 27017
+              name: mongo-pod-port
+          command: ["sh"]
+          args:
+            - "-c"
+            - |
+              set -ex
+              mongod --config /data/configdb/mongod_rs.conf
+              sleep infinity              
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          volumeMounts:
+            - name: conf
+              mountPath: /data/configdb
+              readOnly: false
+            - name: data
+              mountPath: /data
+              readOnly: false
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+      volumes:
+        - name: conf
+          configMap:
+            name: mongodb-rs-cm
+            defaultMode: 0600
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 300Gi
+        # storageClassName: demo-storage
+        storageClassName: standard

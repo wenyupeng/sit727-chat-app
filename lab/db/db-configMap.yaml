@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-rs-cm
+data:
+  keyfile: |
+      0HxMAyO3YhobBuX/xgsKoOQsLAO+kXJltDxtZzeSwmxWNvlckkA1VA+lS3yGqYN9
+      /HPiBqHZSDaDp+zY+i/kMohqo7evHbhJucoCwfW700u9f6q90I78JIIAwydIh73s
+      RHiKnevu9AihMsHkdAlKdIDOhJCfk9pqzWO4fzdMnG98424VmocJ84ERZIs/ZQmL
+      yazIns5EnRqiLc1RSVhY4WLqpKVTuNiUkKL1q5+4fVsPFwqFeMo2uv9C1oQL24ny
+      IT0tntG+hzj+HZONTaYcAyZg57VVQ/bvGNQecQtN5QLeZSNwiye7H12NCsfFylW2
+      9CCjQoJUST6myOqSf4Umy79DongGZFM8fLpC6+hPYUqiX/GVLZ8WSuT8XZU/+PQo
+      o+nH/PaO3keGyBJaxpzWgf9wIKdmER7BKEeRplznQRvRJAvL+lhnX71443AhNIUA
+      5HZ7YsrLusnZ3yLfzKS8TdsI8V2kRs1qWxFOrobg4HFZvFpwevz2WAWLSpjuuCaF
+      OYNQwVny108xavc06thqllI4T+hc5L6KNB5kG5dUgcn4IMO7UoDRcEmZNVPE3tT0
+      3Gstxrbpo9cPIbnOzPs4Kvdx8AmJTtCO/JX0s0QqSpHp4kmk3lCDkj6A8tL8voPH
+      6lyEU55IBY9R3Qs66t/rPceqo9tUn8UpD2lUMs8YtAd3Ciouv8SWqAiFC7C4FOjB
+      sQKXBEcq81DgH89hpb1NBhgYndJ+AZLyf8Mx1cRP74XGxetOn9JpEhGz8y2gsAuN
+      Gzh+u5F/9NGXsCpO/Q3tFTZo3+ZsdvoXeJtMsnA8F/paGR803p+WFVLyAtg4CkGK
+      vRFsHzWNn3tV7hTCxCASG8MCgrfXMsTTjdc/D6zZVnIwhDz+/2aGZt9ae7oz9ARh
+      iPDcZ0R7EbZN79wGIDpnDhIGSlOt29EYAXOWLoFtwI+aKevXp8SGIa9m3XS81vKj
+      +7FLGt0WCssLW2+ZByJa7u+uHgC02uCsh9fRYvnKtly9/cBY
+  mongod_rs.conf: |+
+    systemLog:
+      destination: file
+      logAppend: true
+      path: /data/mongod.log
+    storage:
+      dbPath: /data
+      journal:
+        enabled: true
+      directoryPerDB: true
+      wiredTiger:
+        engineConfig:
+          cacheSizeGB: 4
+          directoryForIndexes: true
+    processManagement:
+      fork: true
+      timeZoneInfo: /usr/share/zoneinfo
+      pidFilePath: /data/mongod.pid
+    net:
+      port: 27017
+      bindIp: 0.0.0.0
+      maxIncomingConnections: 5000
+    security:
+      keyFile: /data/configdb/keyfile
+      authorization: enabled
+    replication:
+      oplogSizeMB: 5120
+      replSetName: rs0

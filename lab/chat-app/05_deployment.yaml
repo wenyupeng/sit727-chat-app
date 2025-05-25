@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-super-pets
+  labels:
+    app: ecommerce-super-pets
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ecommerce-super-pets
+  template:
+    metadata:
+      labels:
+        app: ecommerce-super-pets
+    spec:
+      serviceAccountName: ecommerce-super-pets
+      initContainers:
+        - name: create-datestamp
+          image: busybox
+          command: ['sh', '-c', 'date > /data/datestamp.txt']
+          volumeMounts:
+            - mountPath: /data
+              name: datadir
+      containers:
+        - name: ecommerce
+          image: chrisyp/sit727-101p:v1
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: SERVER_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: super-pets
+                  key: server_name
+          volumeMounts:
+            - mountPath: /data
+              name: datadir
+          resources:
+            requests:
+              cpu: 50m
+              memory: 50Mi
+            limits:
+              cpu: 50m
+              memory: 50Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
+
+        - name: envoy
+          image: luksa/kubia-ssl-proxy:1.0
+          ports:
+            - name: https
+              containerPort: 8443
+            - name: admin
+              containerPort: 9901
+          volumeMounts:
+            - mountPath: /data
+              name: datadir
+          resources:
+            requests:
+              cpu: 50m
+              memory: 200Mi
+            limits:
+              cpu: 50m
+              memory: 200Mi
+
+      volumes:
+        - name: datadir
+          emptyDir: {}
