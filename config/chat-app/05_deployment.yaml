@@ -1,39 +1,42 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ecommerce-super-pets
+  name: chat-app
   labels:
-    app: ecommerce-super-pets
+    app: chat-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: ecommerce-super-pets
+      app: chat-app
   template:
     metadata:
       labels:
-        app: ecommerce-super-pets
+        app: chat-app
     spec:
-      serviceAccountName: ecommerce-super-pets
-      initContainers:
-        - name: create-datestamp
-          image: busybox
-          command: ['sh', '-c', 'date > /data/datestamp.txt']
-          volumeMounts:
-            - mountPath: /data
-              name: datadir
+      serviceAccountName: chat-app
       containers:
         - name: ecommerce
-          image: chrisyp/sit727-101p:v1
+          image: chrisyp/sit727-72hd:v1
           ports:
             - name: http
               containerPort: 8080
           env:
-            - name: SERVER_NAME
+            - name: MONGO_HOSTS
               valueFrom:
                 configMapKeyRef:
-                  name: super-pets
-                  key: server_name
+                  name: chat-app
+                  key: MONGO_HOSTS
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: chat-app
+                  key: mongo-root-username
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: chat-app
+                  key: mongo-root-password                  
           volumeMounts:
             - mountPath: /data
               name: datadir
