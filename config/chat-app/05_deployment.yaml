@@ -17,7 +17,7 @@ spec:
       serviceAccountName: chat-app
       containers:
         - name: chat-app
-          image: chrisyp/sit727-72hd:v1
+          image: chrisyp/sit727-72hd:v2
           ports:
             - name: http
               containerPort: 8080
@@ -36,7 +36,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: chat-app
-                  key: mongo-root-password                  
+                  key: mongo-root-password
           volumeMounts:
             - mountPath: /data
               name: datadir
