@@ -18,7 +18,8 @@ app.use(express.urlencoded({ extended: false }));
 const user = process.env.MONGO_USER;
 const pass = process.env.MONGO_PASS;
 const hosts = process.env.MONGO_HOSTS;
-const MONGODB_URI = user ? `mongodb://${user}:${pass}@${hosts}/chatapp?authSource=admin` : 'mongodb://admin:adminpwd@localhost:27017/chatapp?authSource=admin';
+const replicaSet = process.env.MONGO_REPLICA_SET;
+const MONGODB_URI = user ? `mongodb://${user}:${pass}@${hosts}/chatapp?authSource=admin&replicaSet=${replicaSet}` : 'mongodb://admin:adminpwd@localhost:27017/chatapp?authSource=admin';
 
 console.log('MongoDB URI:',MONGODB_URI);
 mongoose.connect(MONGODB_URI, {

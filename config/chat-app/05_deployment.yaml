@@ -37,6 +37,11 @@ spec:
                 secretKeyRef:
                   name: chat-app
                   key: mongo-root-password
+            - name: MONGO_REPLICA_SET
+              valueFrom:
+                configMapKeyRef:
+                  name: chat-app
+                  key: MONGO_REPLICA_SET
           volumeMounts:
             - mountPath: /data
               name: datadir
