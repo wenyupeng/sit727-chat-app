@@ -5,4 +5,4 @@ metadata:
   labels:
     app: chat-app
 data:
-  server_name: Super Pets
+  MONGO_HOSTS: "mongodb-rs-0.mongodb-rs.default.svc.cluster.local:27017"
