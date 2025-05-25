@@ -17,7 +17,7 @@ spec:
       serviceAccountName: chat-app
       containers:
         - name: chat-app
-          image: chrisyp/sit727-72hd:v2
+          image: chrisyp/sit727-72hd:v3
           ports:
             - name: http
               containerPort: 8080
