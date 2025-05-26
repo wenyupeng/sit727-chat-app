@@ -55,14 +55,14 @@ spec:
           readinessProbe:
             httpGet:
               path: /health
-              port: http
-            initialDelaySeconds: 5
+              port: https
+            initialDelaySeconds: 20
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /health
-              port: http
-            initialDelaySeconds: 10
+              port: https
+            initialDelaySeconds: 30
             periodSeconds: 20
 
         - name: envoy

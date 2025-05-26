@@ -5,6 +5,7 @@ metadata:
   labels:
     app: chat-app
 spec:
+  sessionAffinity: ClientIP
   type: NodePort
   selector:
     app: chat-app
