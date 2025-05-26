@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: chat-app-ingress
+  name: chat-app
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     nginx.ingress.kubernetes.io/enable-websocket: "true"
@@ -16,6 +16,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: chat-app-service
+                name: chat-app
                 port:
                   number: 80
