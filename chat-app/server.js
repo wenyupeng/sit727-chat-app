@@ -32,6 +32,11 @@ const users = {};
 const roomUsers = {};
 const peerToPeer = {};
 
+
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' }); 
+});
+
 io.on('connection', (socket) => {
     socket.on('joinRoom', async ({ username, room }) => {
         users[socket.id] = { username, room };
