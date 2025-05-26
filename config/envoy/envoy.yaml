@@ -21,19 +21,20 @@ static_resources:
                         - match:
                             prefix: "/"
                           route:
-                            cluster: chat-app
+                            cluster: backend_service
                             upgrade_configs:
                               - upgrade_type: websocket
                 http_filters:
                   - name: envoy.filters.http.router
-
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
   clusters:
-    - name: chat-app
-      connect_timeout: 1s
-      type: logical_dns
+    - name: backend_service
+      connect_timeout: 0.25s
+      type: strict_dns
       lb_policy: round_robin
       load_assignment:
-        cluster_name: chat-app
+        cluster_name: backend_service
         endpoints:
           - lb_endpoints:
               - endpoint:
