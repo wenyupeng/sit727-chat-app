@@ -55,13 +55,13 @@ spec:
           readinessProbe:
             httpGet:
               path: /health
-              port: https
+              port: http
             initialDelaySeconds: 20
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /health
-              port: https
+              port: http
             initialDelaySeconds: 30
             periodSeconds: 20
 
