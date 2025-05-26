@@ -66,7 +66,7 @@ spec:
             periodSeconds: 20
 
         - name: envoy
-          image: luksa/kubia-ssl-proxy:1.0
+          image: chrisyp/envoy-websocket:v1
           ports:
             - name: https
               containerPort: 8443
